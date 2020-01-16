@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 //const port = 3000; //porta padrão
 const port = process.env.PORT || 8080
 const sql = require('mssql');
-const connStr = "Data Source=191.252.59.59;Initial Catalog=FONNETTeste;Persist Security Info=True;User ID=sa;Password=SisFnt18";
-
+//const connStr = "Data Source=191.252.59.59;Initial Catalog=FONNETTeste;Persist Security Info=True;User ID=sa;Password=SisFnt18";
+const connStr = "Data Source=191.252.59.59;Initial Catalog=FonNetSite;Persist Security Info=True;User ID=site_view;Password=@Fnt2020!";
 //fazendo a conexão global
 sql.connect(connStr)
    .then(conn => global.conn = conn)
@@ -29,6 +29,11 @@ router.get('/chamados/:id?', (req, res) =>{
     let filter = '';
     if(req.params.id) filter = ' WHERE IDCLIENTE=' + parseInt(req.params.id);
     execSQLQuery('SELECT * FROM TB_Chamado' + filter, res);
+})
+
+router.get('/api-fonnet-wordpress',(req ,res) => {
+    execSQLQuery('SELECT * FROM TB_Produtos',res);
+    //execSQLQuery("SELECT ID, COD_PROD,PARTNUMBER, DESCRICAO, TIPO, PesoLiquido, FABRICANTE,PN_COMPATIBILIDADE, Especificacoes, FAMILIA_PLATAFORMA, Foto,EstoqueMinimo, DescricaoProjEspecial, DescricaoEtiqueta, DetalhesSite, CATEGORIA FROM TB_Produtos",res);
 })
 
 //inicia o servidor
